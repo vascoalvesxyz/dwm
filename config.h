@@ -4,10 +4,17 @@
 #define TERMCLASS "st-256color"
 
 /* appearance */
+static const int showsystray                = 1;        
+static const unsigned int systraypinning    = 0;   
+static const unsigned int systrayonleft     = 0;    
+static const unsigned int systrayspacing    = 2;   
+static const int systraypinningfailfirst    = 1;  
+
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const int startwithgaps	     = 1;	 /* 1 means gaps are used by default */
+static const int startwithgaps	    = 1;	 /* 1 means gaps are used by default */
 static const unsigned int gappx     = 15+(6*2);       /* default gap between windows in pixels */
 static const unsigned int snap      = 32;       /* snap pixel */
+
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */

@@ -10,3 +10,4 @@
 - Swallow patch so that the terminal "swallows" any window that it spawns such as media players (mpv, sxiv, etc.)
 - Fibonacci mode (ALT + R), very cool sometimes 
 - Statuscolor, makes the regular status bar not look like shit!!!
+- systray, adds system stray!!!
