@@ -961,6 +961,9 @@ drawbar(Monitor *m)
 
     for (i = 0; i < LENGTH(tags); i++) {
         w = TEXTW(tags[i]);
+        drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+        drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+
         if (m->tagset[m->seltags] & 1 << i)
             drw_setscheme(drw, tagscheme[1]);
         else if (m == selmon && selmon->sel && selmon->sel->tags & 1 << i)
@@ -969,7 +972,9 @@ drawbar(Monitor *m)
             drw_setscheme(drw, tagscheme[2]);
         else
             drw_setscheme(drw, tagscheme[0]);
-        drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+
+        /*drw_setscheme(drw, SchemeNorm);*/
+        /*drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);*/
         x += w;
     }
 	w = TEXTW(m->ltsymbol);
@@ -978,14 +983,13 @@ drawbar(Monitor *m)
 
     if ((w = m->ww - tw - stw - x) > bh) {
         if (m->sel) {
-
             drw_setscheme(drw, scheme[SchemeNorm]);
-            //drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
-            if (m->sel->isfloating) drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+            drw_text(drw, x, 0, w, bh, lrpad / 2, "", 0);
+            if (m->sel->isfloating)
+                drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
         } else {
             drw_setscheme(drw, scheme[SchemeNorm]);
             drw_rect(drw, x, 0, w, bh, 1, 1);
-            //drw_text(drw, x, 0, w, bh, lrpad / 2, "mksur 1.0", 0);
         }
     }
     drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
