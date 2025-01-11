@@ -4,45 +4,33 @@
 #define TERMCLASS "st-256color"
 
 /* appearance */
-static const int showsystray                = 1;        
-static const unsigned int systraypinning    = 0;   
-static const unsigned int systrayonleft     = 0;    
-static const unsigned int systrayspacing    = 2;   
-static const int systraypinningfailfirst    = 1;  
-
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const int startwithgaps	    = 1;	 /* 1 means gaps are used by default */
-static const unsigned int gappx     = 15+(6*2);       /* default gap between windows in pixels */
+static const int startwithgaps	     = 1;	 /* 1 means gaps are used by default */
+static const unsigned int gappx     = 10;       /* default gap between windows in pixels */
 static const unsigned int snap      = 32;       /* snap pixel */
 
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
+
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int usealtbar          = 0;        /* 1 means use non-dwm status bar */
+static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
 static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
+static const char *alttrayname      = "tray";    /* Polybar tray instance name */
 static const char *altbarcmd        = "$HOME/.config/polybar/bar.sh"; /* Alternate bar launch command */
-
-static const char *fonts[]          = { "Mononoki Nerd Font Mono:size=10",
-                                            "Noto Color Emoji:pixelsize=9"
-};
+static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char norm_bg[]         = "#1d2021";
-static const char norm_border[]     = "#303030";
-static const char col_font[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_focus[]       = "#880000";
+
+static const char norm_bg[]         = "#0A0F1F"; // Deep space black (background)
+static const char norm_border[]     = "#1F2C41"; // Soft steel grey (normal border)
+static const char col_font[]        = "#F1F5FF"; // Frosty white (normal text)
+static const char col_gray4[]       = "#FFFFFF"; // Pure white (selected text)
+static const char col_focus[]       = "#B285FF"; // Neon purple (focus color)
+static const char col_border_focus[] = "#4C9EFF"; // Electric blue (focused border)
+
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_font, norm_bg,    norm_border},
-	[SchemeSel]  = { col_gray4, col_focus,  col_focus  },
-};
-
-static const char *tagsel[][2] = {
-   /*   fg         bg    */
-  { col_font, norm_bg}, /* norm */
-  { col_gray4, col_focus}, /* sel */
-  { col_font, norm_border}, /* occ but not sel */
-  { col_focus,  norm_bg}, /* has pinned tag */
+	[SchemeNorm] = { col_font, norm_bg,    norm_border },
+	[SchemeSel]  = { col_gray4, col_focus, col_border_focus },
 };
 
 /* tagging */
@@ -53,7 +41,7 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     	  instance     title        tags->mask   isfloating   isterminal  noswallow  	monitor */
+	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",         NULL,        NULL,                0,            1,           0,         1,        -1 },
 	{ "Steam",         NULL,        NULL,                0,            1,           0,         1,        -1 },
 	{ "steam",         NULL,        NULL,                0,            1,           0,         1,        -1 },
@@ -66,14 +54,11 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
-#include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile }, /* first entry is default */
+	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
- 	{ "[@]",      spiral },
- 	{ "[\\]",      dwindle },
 };
 
 /* key definitions */
@@ -98,9 +83,8 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ ALTKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ ALTKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ ALTKEY|ControlMask,           XK_Return, spawn,          {.v = crtcmd} },
+	{ SUPER|ShiftMask,              XK_Return, spawn,          {.v = crtcmd } },
 	{ ALTKEY,                       XK_b,      togglebar,      {0} },
-	{ ALTKEY|ShiftMask,             XK_b,      toggleborder,   {0} },
 	{ ALTKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ ALTKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ ALTKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -113,21 +97,19 @@ static const Key keys[] = {
 	{ ALTKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ ALTKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ ALTKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ ALTKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
-	{ ALTKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
 	{ ALTKEY,                       XK_space,  setlayout,      {0} },
 	{ ALTKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ ALTKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ ALTKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	/*{ ALTKEY,                       XK_comma,  focusmon,       {.i = -1 } }, */
-	/*{ ALTKEY,                       XK_period, focusmon,       {.i = +1 } }, */
-	{ ALTKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ ALTKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	/*{ ALTKEY,                       XK_comma,  focusmon,       {.i = -1 } },*/
+	/*{ ALTKEY,                       XK_period, focusmon,       {.i = +1 } },*/
+	/*{ ALTKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },*/
+	/*{ ALTKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },*/
 	{ SUPER,                        XK_comma,  setgaps,        {.i = -5 } },
-    { SUPER,                        XK_period, setgaps,        {.i = +5 } },
-    { SUPER,                        XK_a,      setgaps,        {.i = GAP_TOGGLE} },
-	{ SUPER|ShiftMask,              XK_a,      setgaps,        {.i = GAP_RESET } },
-    TAGKEYS(                        XK_1,                      0)
+	{ SUPER,                        XK_period, setgaps,        {.i = +5 } },
+	{ SUPER,                        XK_a,  setgaps,            {.i = GAP_TOGGLE} },
+	{ SUPER|ShiftMask,              XK_a,  setgaps,            {.i = GAP_RESET } },
+	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
