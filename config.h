@@ -25,7 +25,7 @@ static const char norm_border[]     = "#1F2C41"; // Soft steel grey (normal bord
 static const char col_font[]        = "#F1F5FF"; // Frosty white (normal text)
 static const char col_gray4[]       = "#FFFFFF"; // Pure white (selected text)
 static const char col_focus[]       = "#B285FF"; // Neon purple (focus color)
-static const char col_border_focus[] = "#4C9EFF"; // Electric blue (focused border)
+static const char col_border_focus[] = "#98971a"; // Electric blue (focused border)
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
