@@ -20,12 +20,12 @@ static const char *altbarcmd        = "$HOME/.config/polybar/bar.sh"; /* Alterna
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 
-static const char norm_bg[]         = "#0A0F1F"; // Deep space black (background)
-static const char norm_border[]     = "#1F2C41"; // Soft steel grey (normal border)
-static const char col_font[]        = "#F1F5FF"; // Frosty white (normal text)
-static const char col_gray4[]       = "#FFFFFF"; // Pure white (selected text)
-static const char col_focus[]       = "#B285FF"; // Neon purple (focus color)
-static const char col_border_focus[] = "#98971a"; // Electric blue (focused border)
+static const char norm_bg[]         = "#0A0F1F";  // Deep space black (background)
+static const char norm_border[]     = "#F1F5FF";  // Frosty white (normal border)
+static const char col_font[]        = "#1F2C41";  // Soft steel grey (normal text)
+static const char col_gray4[]       = "#FFFFFF";  // Pure white (selected text)
+static const char col_focus[]       = "#B285FF";  // Neon purple (focus color)
+static const char col_border_focus[]= "#4C9EFF";  // Electric blue (focused border)
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -42,10 +42,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",         NULL,        NULL,                0,            1,           0,         1,        -1 },
-	{ "Steam",         NULL,        NULL,                0,            1,           0,         1,        -1 },
-	{ "steam",         NULL,        NULL,                0,            1,           0,         1,        -1 },
-	{ TERMCLASS,      TERMCLASS,   TERMINAL,       	    0,            0,           1,         0,        -1 },
+	{ "Gimp",         NULL,        NULL,             0,            1,           0,         1,        -1 },
+	{ "Steam",        NULL,        NULL,             0,            1,           0,         1,        -1 },
+	{ "steam",        NULL,        NULL,             0,            1,           0,         1,        -1 },
+	{ TERMCLASS,      TERMCLASS,   TERMINAL,       	 0,            0,           1,         0,        -1 },
+	{ "Alacritty",    NULL,        NULL,       	     0,            0,           1,         0,        -1 },
 };
 
 /* layout(s) */
